@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:bantaybaha_test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  flyway:
+    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+
+app:
+  jwt:
+    secret: test-jwt-secret-must-be-at-least-32-bytes
+    expiration-minutes: 60

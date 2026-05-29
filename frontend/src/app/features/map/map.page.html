@@ -1,0 +1,84 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>BantayBaha</ion-title>
+    <ion-buttons slot="end">
+      <ion-button aria-label="Refresh projects" (click)="refresh()">
+        <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+  <section class="map-shell">
+    <div class="map-panel">
+      <div #mapContainer class="map-canvas" aria-label="Flood-control project map"></div>
+
+      <div class="map-controls">
+        <ion-searchbar
+          debounce="350"
+          placeholder="Search projects"
+          [value]="searchTerm()"
+          (ionInput)="onSearch($event)"
+        ></ion-searchbar>
+
+        <ion-segment [value]="statusFilter()" (ionChange)="onStatusChange($event)" scrollable="true">
+          <ion-segment-button value="ALL">
+            <ion-label>All</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="ONGOING">
+            <ion-label>Ongoing</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="COMPLETED">
+            <ion-label>Done</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="DELAYED">
+            <ion-label>Delayed</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="DAMAGED">
+            <ion-label>Damaged</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+
+      @if (loading()) {
+        <div class="map-status">
+          <ion-spinner name="crescent"></ion-spinner>
+        </div>
+      }
+
+      @if (errorMessage()) {
+        <div class="map-status error">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          <span>{{ errorMessage() }}</span>
+        </div>
+      }
+    </div>
+
+    <aside class="project-panel">
+      <div class="panel-heading">
+        <span>{{ projects().length }} projects</span>
+        <ion-icon name="filter-outline"></ion-icon>
+      </div>
+
+      <ion-list lines="none">
+        @for (project of projects(); track project.id) {
+          <ion-item
+            button="true"
+            detail="false"
+            [class.selected]="selectedProject()?.id === project.id"
+            (click)="focusProject(project)"
+          >
+            <ion-label>
+              <h2>{{ project.title }}</h2>
+              <p>{{ project.status }}</p>
+            </ion-label>
+            <ion-icon slot="end" name="locate-outline"></ion-icon>
+          </ion-item>
+        } @empty {
+          <div class="empty-state">No projects found.</div>
+        }
+      </ion-list>
+    </aside>
+  </section>
+</ion-content>
