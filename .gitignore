@@ -1,0 +1,29 @@
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Java / Spring Boot
+backend/target/
+backend/.gradle/
+backend/build/
+
+# Node / Ionic Angular
+frontend/node_modules/
+frontend/www/
+frontend/dist/
+frontend/.angular/
+frontend/coverage/
+
+# Upload/build artifacts
+uploads/
+tmp/
